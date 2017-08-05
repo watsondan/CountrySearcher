@@ -9,11 +9,11 @@ import CountryList from './CountryList/CountryList';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <div>
-    <CountryInputForm />
-    <CountryList />
-  </div>,
-  document.getElementById('root')
+    <div>
+        <CountryInputForm />
+        <CountryList />
+    </div>,
+    document.getElementById('root')
 );
 
 registerServiceWorker();

@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom';
 import CountryInputFrom from './CountryInputFrom';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<CountryInputFrom />, div);
+    const div = document.createElement('div');
+    ReactDOM.render(<CountryInputFrom />, div);
 });
