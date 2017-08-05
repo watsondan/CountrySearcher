@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as ChangeQueryAction from './../../actions/ChangeQueryAction'
 
 export default class CountryInputForm extends Component {
 
@@ -11,8 +12,7 @@ export default class CountryInputForm extends Component {
     }
 
     HandelChange(e) {
-        const searchString = e.target.value;
-        this.props.updateList();
+        ChangeQueryAction.ChangeQuery(e.target.value);
     }
 
     render() {
