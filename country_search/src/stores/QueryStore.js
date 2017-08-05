@@ -19,12 +19,13 @@ class QueryStore extends EventEmitter {
 
     handelActions(action) {
         switch (action.type) {
-            case "SET_QUERY": {
+            case "SET_QUERY":
                 this.setQuery(action.query);
-            }
+                break;
+            default:
         }
     }
 }
-const queryStore = new QueryStore;
+const queryStore = new QueryStore();
 Dispatcher.register(queryStore.handelActions.bind(queryStore));
 export default queryStore; // Export the const obj, not class.

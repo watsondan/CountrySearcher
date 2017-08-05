@@ -3,10 +3,6 @@ import * as ChangeQueryAction from './../../actions/ChangeQueryAction'
 
 export default class CountryInputForm extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
 
     }
