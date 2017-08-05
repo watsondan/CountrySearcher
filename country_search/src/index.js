@@ -1,18 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
-import CountryInputForm from './CountryInputForm/CountryInputForm';
-import CountryList from './CountryList/CountryList';
-
-
 import registerServiceWorker from './registerServiceWorker';
-
+import CountrySearcher from './pages/CountrySearcher'
 ReactDOM.render(
-    <div>
-        <CountryInputForm />
-        <CountryList />
-    </div>,
+    <CountrySearcher />,
     document.getElementById('root')
 );
 

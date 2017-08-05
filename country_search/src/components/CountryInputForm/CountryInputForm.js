@@ -10,10 +10,15 @@ export default class CountryInputForm extends Component {
 
     }
 
+    HandelChange(e) {
+        const searchString = e.target.value;
+        this.props.updateList();
+    }
+
     render() {
         return (
             <form>
-                <input type='text' placeholder='Country Name, A2 Code or A3 Code:'/>
+                <input type='text' placeholder='Country Name, A2 Code or A3 Code:' onChange={this.HandelChange.bind(this)} />
             </form>
         );
     }
