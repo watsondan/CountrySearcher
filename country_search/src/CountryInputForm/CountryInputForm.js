@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CountryInputForm extends Component {
+export default class CountryInputForm extends Component {
 
     constructor(props) {
         super(props);
@@ -45,5 +45,3 @@ class CountryInputForm extends Component {
         );
     }
 }
-
-export default CountryInputForm;

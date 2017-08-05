@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 
-class CountryList extends Component {
+export default class CountryList extends Component {
     render() {
         return (
-            
+            <p>Empty list</p>
         );
     }
 }
-
-export default CountryList;
