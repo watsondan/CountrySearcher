@@ -7,22 +7,34 @@ class CountryRequester
     public function __construct() {}
 
     public function Query($query, $queryType) {
-        $results;
+        $qString;
         switch ($queryType) {
             case "Alpha Code":
-                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/alpha/$query");
+                $qString = "$this->RESTCOUNTRIES_URL/alpha/$query";
                 break;
             case "Full Name":
-                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/name/$query?fullText=true");
+                $qString = "$this->RESTCOUNTRIES_URL/name/$query?fullText=true";
                 break;
             case "Name":
-                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/name/$query");
+                $qString = "$this->RESTCOUNTRIES_URL/name/$query";
                 break;
             default:
                 break;
         }
-        return $this->FilterResults(json_decode($results, true));
+
+        $results = @file_get_contents(str_replace(" ", '%20', $qString));
+        $results = json_decode($results, true);
+
+        // if there is only one reuslt, wrap it in an new array.
+        if (!array_key_exists(0, $results)) {
+            $temp = array();
+            array_push($temp, $results);
+            $results = $temp;
+        }
+
+        return $this->FilterResults($results);
     }
+
     // the full name, alpha code 2, alpha code 3, flag image
     // (scaled to fit display), region, subregion, population, and a list of its languages.
     private function FilterResults($results) {
@@ -42,6 +54,20 @@ class CountryRequester
             }
             array_push($fResults, $newCountry);
         }
+
+        $sortCols = array();
+        foreach($fResults as $country=>$value) {
+            $sortCols['name'][$country] = $value['name'];
+            $sortCols['population'][$country] = $value['population'];
+        }
+
+        array_multisort($sortCols['name'], SORT_ASC, $sortCols['population'], SORT_ASC, $fResults);
+
+        // $fResults['count'] = count($fResults, 0); // counts top layer of array.
+        // if (condition) {
+        //     # code...
+        // }
+
         return $fResults;
     }
 }

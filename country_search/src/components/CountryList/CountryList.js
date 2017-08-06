@@ -55,10 +55,9 @@ export default class CountryList extends Component {
         }
         if (this.state.countryData === null) {
             return (
-                <p>Data area...</p>
+                <p>No data Availabel. Try new search string.</p>
             );
         } else {
-            var data = this.state.countryData;
             return (
                 <ul className="Results_List">
                     <li className="Results_Header">
