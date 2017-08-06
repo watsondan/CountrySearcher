@@ -30,13 +30,16 @@ class CountryRequester
         foreach ($results as $country) {
             $newCountry = array();
             $newCountry['name'] = $country['name'];
-            $nweCountry['alpha2Code'] = $country['alpha2Code'];
-            $nweCountry['alpha3Code'] = $country['alpha3Code'];
+            $newCountry['alpha2Code'] = $country['alpha2Code'];
+            $newCountry['alpha3Code'] = $country['alpha3Code'];
             $newCountry['flag'] = $country['flag'];
             $newCountry['region'] = $country['region'];
             $newCountry['subregion'] = $country['subregion'];
             $newCountry['population'] = $country['population'];
-            $newCountry['languages'] = $country['languages'];
+            $newCountry['languages'] = array();
+            foreach ($country['languages'] as $language) {
+                array_push($newCountry['languages'], $language['name']);
+            }
             array_push($fResults, $newCountry);
         }
         return $fResults;
