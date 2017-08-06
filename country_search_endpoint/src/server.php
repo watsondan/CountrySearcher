@@ -9,6 +9,6 @@ $cr = new CountryRequester();
 // echo json_encode($results); // To client
 
 
-$results = $cr->Query('US', 'Alpha Code');
+$results = $cr->Query('col', 'Name');
 echo print_r($results);
  ?>

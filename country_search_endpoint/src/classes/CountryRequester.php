@@ -21,7 +21,6 @@ class CountryRequester
             default:
                 break;
         }
-
         $results = @file_get_contents(str_replace(" ", '%20', $qString));
         $results = json_decode($results, true);
 
@@ -39,14 +38,29 @@ class CountryRequester
     // (scaled to fit display), region, subregion, population, and a list of its languages.
     private function FilterResults($results) {
         $fResults = array();
+        $regions = array();
+        $subregions = array();
         foreach ($results as $country) {
             $newCountry = array();
             $newCountry['name'] = $country['name'];
             $newCountry['alpha2Code'] = $country['alpha2Code'];
             $newCountry['alpha3Code'] = $country['alpha3Code'];
             $newCountry['flag'] = $country['flag'];
+
+            if (!array_key_exists($country['region'], $regions)) {
+                $regions[$country['region']] = 1;
+            } else {
+                $regions[$country['region']] += 1;
+            }
             $newCountry['region'] = $country['region'];
+
+            if (!array_key_exists($country['subregion'], $subregions)) {
+                $subregions[$country['subregion']] = 1;
+            } else {
+                $subregions[$country['subregion']] += 1;
+            }
             $newCountry['subregion'] = $country['subregion'];
+
             $newCountry['population'] = $country['population'];
             $newCountry['languages'] = array();
             foreach ($country['languages'] as $language) {
@@ -55,18 +69,22 @@ class CountryRequester
             array_push($fResults, $newCountry);
         }
 
-        $sortCols = array();
-        foreach($fResults as $country=>$value) {
-            $sortCols['name'][$country] = $value['name'];
-            $sortCols['population'][$country] = $value['population'];
+        if (count($fResults, 0) > 1) {
+            $sortCols = array();
+            foreach($fResults as $country=>$value) {
+                $sortCols['name'][$country] = $value['name'];
+                $sortCols['population'][$country] = $value['population'];
+            }
+
+            array_multisort($sortCols['name'], SORT_ASC, $sortCols['population'], SORT_ASC, $fResults);
         }
 
-        array_multisort($sortCols['name'], SORT_ASC, $sortCols['population'], SORT_ASC, $fResults);
-
-        // $fResults['count'] = count($fResults, 0); // counts top layer of array.
-        // if (condition) {
-        //     # code...
-        // }
+        $fResults['result_data']['count'] = count($fResults, 0); // counts top layer of array.
+        $fResults['result_data']['regions'] = $regions;
+        $fResults['result_data']['subregions'] = $subregions;
+        if ($fResults['result_data']['count'] > 50) {
+            # code...
+        }
 
         return $fResults;
     }
