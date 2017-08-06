@@ -6,3 +6,10 @@ export function ChangeQuery(query) {
         query,
     });
 }
+
+export function ChangeQueryType(qtype) {
+    Dispatcher.dispatch({
+        type: "SET_QUERY_TYPE",
+        qtype,
+    });
+}

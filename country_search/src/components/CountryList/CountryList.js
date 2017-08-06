@@ -7,24 +7,23 @@ export default class CountryList extends Component {
         super(props);
         this.state = {
           isLoading: false,
-          query: QueryStore.getQuery(),
+          query: "",
+          queryType: ""
         }
     }
 
     componentWillMount() {
         QueryStore.on("change", () => {
-            this.setState({
-                query: QueryStore.getQuery(),
-            });
+            // this.setState({
+            //     query: QueryStore.getQuery(),
+            //     queryType: QueryStore.getQueryType()
+            // });
             this.queryForData();
         });
     }
 
-    componentDidMount() {
-
-    }
-
     queryForData() {
+
         const url = 'http://localhost:8000';
         let data = {
             method: 'POST',
@@ -32,7 +31,7 @@ export default class CountryList extends Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: "query=" + this.state.query
+            body: "query=" + QueryStore.getQuery() + "&type=" + QueryStore.getQueryType()
         }
         this.setState({                     // Funtion setState call rerenders Component...
             isLoading: true
@@ -46,15 +45,12 @@ export default class CountryList extends Component {
             });
         })
         .catch((error) => {
-            this.setState({                     // Funtion setState call rerenders Component...
-                isLoading: false
-            });
             console.error(error);
         });
     }
 
     render() {
-        if (this.state.query === "") {
+        if (QueryStore.getQuery() === "") {
             return (
               <p>Type to start searching...</p>
             );
