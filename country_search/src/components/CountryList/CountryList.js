@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import QueryStore from './../../stores/QueryStore'
+import QueryStore from './../../stores/QueryStore';
+import Country from './../Country/Country';
 
 export default class CountryList extends Component {
 
@@ -8,7 +9,8 @@ export default class CountryList extends Component {
         this.state = {
             isLoading: false,
             query: "",
-            queryType: ""
+            queryType: "",
+            countryData: null
         }
     }
 
@@ -50,8 +52,25 @@ export default class CountryList extends Component {
               <p>Loading data...</p>
             );
         }
-        return (
-            <p>{JSON.stringify(this.state.countryData)}</p>
-        );
+        if (this.state.countryData === null) {
+            return (
+                <p>Data area...</p>
+            );
+        } else {
+            var data = this.state.countryData;
+            var arr = [];
+            Object.keys(data).forEach(function(key) {
+                arr.push(data[key]);
+            });
+            return (
+                <ul>
+                    {
+                        this.state.countryData.map(item =>
+                            <Country key={item.alpha3Code} name={item.name} alpha2Code={item.alpha2Code} alpha3Code={item.alpha3Code} flag={item.flag} region={item.region} subregion={item.subregion} population={item.population} languages={item.languages} />
+                        )
+                    }
+                </ul>
+            );
+        }
     }
 }
