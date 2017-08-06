@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import QueryStore from './../../stores/QueryStore';
 import Country from './../Country/Country';
+import styles from './CountryList.css';
 
 export default class CountryList extends Component {
 
@@ -58,12 +59,18 @@ export default class CountryList extends Component {
             );
         } else {
             var data = this.state.countryData;
-            var arr = [];
-            Object.keys(data).forEach(function(key) {
-                arr.push(data[key]);
-            });
             return (
-                <ul>
+                <ul className="Results_List">
+                    <li className="Results_Header">
+                        <span className="Results_List_Header_item Results_List_Header_name" >Name</span>
+                        <span className="Results_List_Header_item Results_List_Header_alpha2Code" >Alpha Code 2</span>
+                        <span className="Results_List_Header_item Results_List_Header_alpha3Code" >Alpha Code 3</span>
+                        <span className="Results_List_Header_item Results_List_Header_flag" >Flag</span>
+                        <span className="Results_List_Header_item Results_List_Header_region" >Region</span>
+                        <span className="Results_List_Header_item Results_List_Header_subregion" >Subregion</span>
+                        <span className="Results_List_Header_item Results_List_Header_population" >Population</span>
+                        <span className="Results_List_Header_item Results_List_Header_languages" >Languages</span>
+                    </li>
                     {
                         this.state.countryData.map(item =>
                             <Country key={item.alpha3Code} name={item.name} alpha2Code={item.alpha2Code} alpha3Code={item.alpha3Code} flag={item.flag} region={item.region} subregion={item.subregion} population={item.population} languages={item.languages} />

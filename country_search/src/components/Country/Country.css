@@ -1,0 +1,14 @@
+.Results_List_Item {
+    width: 100%;
+    float: left;
+    background-color: lightgray;
+}
+
+.Results_List_Item_Element {
+    float: left;
+    width: 12.5%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    box-shadow: 0 0 0 1px white;
+}
