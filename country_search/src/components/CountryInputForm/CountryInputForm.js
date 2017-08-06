@@ -32,7 +32,7 @@ export default class CountryInputForm extends Component {
     render() {
         return (
             //How do you stop a form form submitting on enter?
-            <form onSubmit={this.SearchButtonClick.bind(this)} >
+            <form>
                 <input type='radio' name='qType' value='Alpha Code' onClick={this.HandelRadioButtonClick.bind(this)} /> Alpha Code
                 <input type='radio' name='qType' value='Name' onClick={this.HandelRadioButtonClick.bind(this)} /> Name
                 <input type='radio' name='qType' value='Full Name' onClick={this.HandelRadioButtonClick.bind(this)} /> Full Name

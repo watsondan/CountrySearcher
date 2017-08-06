@@ -6,24 +6,19 @@ export default class CountryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          isLoading: false,
-          query: "",
-          queryType: ""
+            isLoading: false,
+            query: "",
+            queryType: ""
         }
     }
 
     componentWillMount() {
         QueryStore.on("change", () => {
-            // this.setState({
-            //     query: QueryStore.getQuery(),
-            //     queryType: QueryStore.getQueryType()
-            // });
             this.queryForData();
         });
     }
 
     queryForData() {
-
         const url = 'http://localhost:8000';
         let data = {
             method: 'POST',
@@ -50,11 +45,6 @@ export default class CountryList extends Component {
     }
 
     render() {
-        if (QueryStore.getQuery() === "") {
-            return (
-              <p>Type to start searching...</p>
-            );
-        }
         if (this.state.isLoading) {
             return (
               <p>Loading data...</p>
