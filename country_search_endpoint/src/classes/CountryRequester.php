@@ -6,16 +6,40 @@ class CountryRequester
 
     public function __construct() {}
 
-    public function QueryByName($name) {
-        return json_decode(@file_get_contents("$this->RESTCOUNTRIES_URL/name/$name"));
+    public function Query($query, $queryType) {
+        $results;
+        switch ($queryType) {
+            case "Alpha Code":
+                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/alpha/$query");
+                break;
+            case "Full Name":
+                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/name/$query?fullText=true");
+                break;
+            case "Name":
+                $results = @file_get_contents("$this->RESTCOUNTRIES_URL/name/$query");
+                break;
+            default:
+                break;
+        }
+        return $this->FilterResults(json_decode($results, true));
     }
-
-    public function QueryByFullName($name) {
-        return json_decode(@file_get_contents("$this->RESTCOUNTRIES_URL/name/$name?fullText=true"));
-    }
-
-    public function QueryByCode($code) {
-        return json_decode(@file_get_contents("$this->RESTCOUNTRIES_URL/alpha/$code"));
+    // the full name, alpha code 2, alpha code 3, flag image
+    // (scaled to fit display), region, subregion, population, and a list of its languages.
+    private function FilterResults($results) {
+        $fResults = array();
+        foreach ($results as $country) {
+            $newCountry = array();
+            $newCountry['name'] = $country['name'];
+            $nweCountry['alpha2Code'] = $country['alpha2Code'];
+            $nweCountry['alpha3Code'] = $country['alpha3Code'];
+            $newCountry['flag'] = $country['flag'];
+            $newCountry['region'] = $country['region'];
+            $newCountry['subregion'] = $country['subregion'];
+            $newCountry['population'] = $country['population'];
+            $newCountry['languages'] = $country['languages'];
+            array_push($fResults, $newCountry);
+        }
+        return $fResults;
     }
 }
  ?>

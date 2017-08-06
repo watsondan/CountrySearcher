@@ -5,11 +5,10 @@ header("Access-Control-Allow-Origin: *");
 include 'classes/CountryRequester.php';
 $cr = new CountryRequester();
 
-if ($_POST['type'] == "Alpha Code") {
-    echo json_encode($cr->QueryByCode($_POST['query']));
-} elseif ($_POST['type'] == "Name") {
-    echo json_encode($cr->QueryByName($_POST['query']));
-} elseif ($_POST['type'] == "Full Name") {
-    echo json_encode($cr->QueryByFullName($_POST['query']));
-}
+$results = $cr->Query($_POST['query'], $_POST['type']);
+echo json_encode($results); // To client
+
+
+// $results = $cr->Query('co', 'Name');
+// echo print_r($results);
  ?>
