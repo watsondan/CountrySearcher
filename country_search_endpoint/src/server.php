@@ -9,6 +9,6 @@ $results = $cr->Query($_POST['query'], $_POST['type']);
 echo json_encode($results); // To client
 
 
-// $results = $cr->Query('col', 'Name');
+// $results = $cr->Query('u', 'Name');
 // echo print_r($results);
  ?>

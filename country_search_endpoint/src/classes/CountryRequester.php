@@ -22,6 +22,11 @@ class CountryRequester
                 break;
         }
         $results = @file_get_contents(str_replace(" ", '%20', $qString));
+
+        if ($results == null) {
+            return null;
+        }
+
         $results = json_decode($results, true);
 
         // if there is only one reuslt, wrap it in an new array.
@@ -78,17 +83,25 @@ class CountryRequester
             array_multisort($sortCols['name'], SORT_ASC, $sortCols['population'], SORT_ASC, $fResults);
         }
 
+        $pages = array();
+        $pageCounter = 1;
+        $pages[$pageCounter] = array();
+        $countryCounter = 0;
+        foreach ($fResults as $country) {
+            array_push($pages[$pageCounter], $country);
+            $countryCounter += 1;
+            if (($countryCounter % 50) == 0) {
+                $pageCounter += 1;
+                $pages[$pageCounter] = array();
+            }
+        }
+
         $results_data = array();
-
-        $results_data['results'] = $fResults;
-
+        $results_data['results'] = $pages;
         $results_data['data']['count'] = count($fResults, 0); // counts top layer of array.
+        $results_data['data']['pages'] = $pageCounter;
         $results_data['data']['regions'] = $regions;
         $results_data['data']['subregions'] = $subregions;
-        if ($results_data['result_data']['count'] > 50) {
-            $pages = ceil($results_data['result_data']['count'] / 50);
-            
-        }
 
         return $results_data;
     }

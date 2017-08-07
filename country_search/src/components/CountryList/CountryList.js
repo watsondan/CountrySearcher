@@ -8,6 +8,7 @@ export default class CountryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 1,
             isLoading: false,
             query: "",
             queryType: "",
@@ -47,6 +48,23 @@ export default class CountryList extends Component {
         });
     }
 
+    HandelNextClick(e) {
+        var curPage = this.state.currentPage;
+        var totPage = this.state.countryData.data.pages;
+        if (curPage < totPage) {
+            var nextPage = this.state.currentPage + 1;
+            this.setState({currentPage: nextPage});
+        }
+    }
+
+    HandelPreClick() {
+        var curPage = this.state.currentPage;
+        if (curPage > 1) {
+            var nextPage = this.state.currentPage - 1;
+            this.setState({currentPage: nextPage});
+        }
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -58,6 +76,9 @@ export default class CountryList extends Component {
                 <p>No data Availabel. Try new search string.</p>
             );
         } else {
+
+            var data = this.state.countryData.results[this.state.currentPage];
+
             return (
                 <ul className="Results_List">
                     <li className="Results_List_Header">
@@ -71,16 +92,17 @@ export default class CountryList extends Component {
                         <span className="Results_List_Header_item Results_List_Header_languages" >Languages</span>
                     </li>
                     {
-                        this.state.countryData.results.map(item =>
+
+                        data.map(item =>
                             <Country key={item.alpha3Code} name={item.name} alpha2Code={item.alpha2Code} alpha3Code={item.alpha3Code} flag={item.flag} region={item.region} subregion={item.subregion} population={item.population} languages={item.languages} />
                         )
                     }
                     <li className="Results_List_Footer">
-                        <span className="Results_List_Footer_item Results_List_Footer_Pre" >Pre</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Pre" onClick={this.HandelPreClick.bind(this)} >Pre</span>
                         <span className="Results_List_Footer_item Results_List_Footer_Count" >Count: {this.state.countryData.data.count}</span>
                         <span className="Results_List_Footer_item Results_List_Footer_Reagions" >Reagions: {JSON.stringify(this.state.countryData.data.regions)}</span>
                         <span className="Results_List_Footer_item Results_List_Footer_Subregion" >Subregions: {JSON.stringify(this.state.countryData.data.subregions)}</span>
-                        <span className="Results_List_Footer_item Results_List_Footer_Next" >Next</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Next" onClick={this.HandelNextClick.bind(this)} >Next</span>
                     </li>
                 </ul>
             );
