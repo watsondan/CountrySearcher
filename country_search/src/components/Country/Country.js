@@ -10,7 +10,7 @@ export default class Country extends Component {
                 <span className="Results_List_Item_Element" >{this.props.alpha2Code}</span>
                 <span className="Results_List_Item_Element" >{this.props.alpha3Code}</span>
                 <span className="Results_List_Item_Element" >
-                    <img src={this.props.flag} alt="Flag of {this.props.name}" height="100%" width="100%"></img>
+                    <img src={this.props.flag} alt="Flag of {this.props.name}" height="60px" width="100px"></img>
                 </span>
                 <span className="Results_List_Item_Element" >{this.props.region}</span>
                 <span className="Results_List_Item_Element" >{this.props.subregion}</span>
