@@ -60,7 +60,7 @@ export default class CountryList extends Component {
         } else {
             return (
                 <ul className="Results_List">
-                    <li className="Results_Header">
+                    <li className="Results_List_Header">
                         <span className="Results_List_Header_item Results_List_Header_name" >Name</span>
                         <span className="Results_List_Header_item Results_List_Header_alpha2Code" >Alpha Code 2</span>
                         <span className="Results_List_Header_item Results_List_Header_alpha3Code" >Alpha Code 3</span>
@@ -71,10 +71,17 @@ export default class CountryList extends Component {
                         <span className="Results_List_Header_item Results_List_Header_languages" >Languages</span>
                     </li>
                     {
-                        this.state.countryData.map(item =>
+                        this.state.countryData.results.map(item =>
                             <Country key={item.alpha3Code} name={item.name} alpha2Code={item.alpha2Code} alpha3Code={item.alpha3Code} flag={item.flag} region={item.region} subregion={item.subregion} population={item.population} languages={item.languages} />
                         )
                     }
+                    <li className="Results_List_Footer">
+                        <span className="Results_List_Footer_item Results_List_Footer_Pre" >Pre</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Count" >Count: {this.state.countryData.data.count}</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Reagions" >Reagions: {JSON.stringify(this.state.countryData.data.regions)}</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Subregion" >Subregions: {JSON.stringify(this.state.countryData.data.subregions)}</span>
+                        <span className="Results_List_Footer_item Results_List_Footer_Next" >Next</span>
+                    </li>
                 </ul>
             );
         }

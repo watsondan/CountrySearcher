@@ -34,8 +34,7 @@ class CountryRequester
         return $this->FilterResults($results);
     }
 
-    // the full name, alpha code 2, alpha code 3, flag image
-    // (scaled to fit display), region, subregion, population, and a list of its languages.
+
     private function FilterResults($results) {
         $fResults = array();
         $regions = array();
@@ -79,14 +78,19 @@ class CountryRequester
             array_multisort($sortCols['name'], SORT_ASC, $sortCols['population'], SORT_ASC, $fResults);
         }
 
-        $fResults['result_data']['count'] = count($fResults, 0); // counts top layer of array.
-        $fResults['result_data']['regions'] = $regions;
-        $fResults['result_data']['subregions'] = $subregions;
-        if ($fResults['result_data']['count'] > 50) {
-            # code...
+        $results_data = array();
+
+        $results_data['results'] = $fResults;
+
+        $results_data['data']['count'] = count($fResults, 0); // counts top layer of array.
+        $results_data['data']['regions'] = $regions;
+        $results_data['data']['subregions'] = $subregions;
+        if ($results_data['result_data']['count'] > 50) {
+            $pages = ceil($results_data['result_data']['count'] / 50);
+            
         }
 
-        return $fResults;
+        return $results_data;
     }
 }
  ?>
