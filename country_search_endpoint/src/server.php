@@ -6,9 +6,6 @@ include 'classes/CountryRequester.php';
 $cr = new CountryRequester();
 
 $results = $cr->Query($_POST['query'], $_POST['type']);
-echo json_encode($results); // To client
+echo json_encode($results);
 
-
-// $results = $cr->Query('u', 'Name');
-// echo print_r($results);
  ?>
